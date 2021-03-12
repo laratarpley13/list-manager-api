@@ -1,0 +1,20 @@
+INSERT INTO items (name, listId, userId)
+VALUES
+    ('Item 1', 1, 1),
+    ('Item 2', 1, 1),
+    ('Item 3', 1, 1),
+    ('Apples', 2, 1),
+    ('Bananas', 2, 1),
+    ('Oranges', 2, 1),
+    ('Item 1', 3, 2),
+    ('Item 2', 3, 2),
+    ('Item 3', 3, 2),
+    ('Vacuum', 4, 2),
+    ('Dust', 4, 2),
+    ('Garden', 4, 2),
+    ('Item 1', 5, 3),
+    ('Item 2', 5, 3),
+    ('Item 3', 5, 3),
+    ('Walk dogs', 6, 3),
+    ('Dog bath time', 6, 3),
+    ('Training', 6, 3);
