@@ -1,8 +1,8 @@
-const path = require('path')
+//const path = require('path')
 const express = require('express')
 //const xss = require('xss')
 const ListsService = require('./lists-service')
-const usersRouter = require('../users/users-router')
+//const usersRouter = require('../users/users-router')
 
 const listsRouter = express.Router()
 const jsonParser = express.json()
@@ -69,7 +69,7 @@ listsRouter
         res.json({
             id: res.list.id,
             name: res.list.name,
-            dat: res.list.date,
+            date: res.list.date,
             userId: res.list.userid,
         })
     })
