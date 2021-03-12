@@ -9,12 +9,11 @@ const itemsRouter = express.Router()
 const jsonParser = express.json()
 
 itemsRouter
-    .route('/:user_id/:list_id')
+    .route('/:user_id/')
     .get((req, res, next) => {
         ItemsService.getAllItems(
             req.app.get('db'),
-            req.params.user_id,
-            req.params.list_id
+            req.params.user_id
         )
             .then(items => {
                 res.json(items)
