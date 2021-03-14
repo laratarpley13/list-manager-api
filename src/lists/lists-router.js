@@ -70,7 +70,7 @@ listsRouter
             id: res.list.id,
             name: res.list.name,
             date: res.list.date,
-            userId: res.list.userid,
+            userid: res.list.userid,
         })
     })
     .delete((req, res, next) => {

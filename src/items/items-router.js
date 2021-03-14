@@ -71,10 +71,10 @@ itemsRouter
         res.json({
             id: res.item.id,
             name: res.item.name,
-            listId: res.item.listid,
-            userId: res.item.userid,
+            listid: res.item.listid,
+            userid: res.item.userid,
             active: res.item.active,
-            editItemActive: res.item.active,
+            edititemactive: res.item.active,
         })
     })
     .delete((req, res, next) => {
@@ -90,14 +90,14 @@ itemsRouter
             .catch(next)
     })
     .patch(jsonParser, (req, res, next) => {
-        const { name,  active, editItemActive } = req.body
-        const itemToUpdate = { name, active, editItemActive } 
+        const { name,  active, edititemactive } = req.body
+        const itemToUpdate = { name, active, edititemactive } 
 
         const numberOfValues = Object.values(itemToUpdate).filter(Boolean).length
         if (numberOfValues === 0) {
             return res.status(400).json({
                 error: {
-                    message: `Request body must contain 'name', 'active' or 'editItemActive'`
+                    message: `Request body must contain 'name', 'active' or 'edititemactive'`
                 }
             })
         }
