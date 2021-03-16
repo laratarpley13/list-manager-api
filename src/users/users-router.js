@@ -1,10 +1,17 @@
-const path = require('path')
 const express = require('express')
-//const xss = require('xss')
+const xss = require('xss')
 const UsersService = require('./users-service')
-
 const usersRouter = express.Router()
 const jsonParser = express.json()
+const bcrypt = require('bcryptjs')
+const { hashPassword } = require('./users-service')
+
+const serializeUser = (user) => {
+    return {
+        id: user.id,
+        email: xss(user.email),
+    } 
+}
 
 usersRouter
     .route('/')
@@ -19,30 +26,58 @@ usersRouter
     })
     .post(jsonParser, (req, res, next) => {
         const { email, password } = req.body
-        const newUser = { email, password }
+        const REGEX_UPPER_LOWER_NUMBER_SPECIAL = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&])[\S]+/;
 
-        if (email == null) {
+        if (!email) {
             return res.status(400).json({
-                error: { message: `Missing 'email' in request body` }
+                message: `Missing 'email'`
             })
         }
 
-        if (password == null) {
+        if (!password) {
             return res.status(400).json({
-                error: { message: `Missing 'password' in request body` }
+                message: `Missing 'password'`
             })
         }
 
-        UsersService.insertUser(
-            req.app.get('db'),
-            newUser
-        )
-            .then(user => {
-                res
-                    .status(201)
-                    .json(user.email)
+        if(password.length < 8) {
+            return res.status(400).json({
+               message: `Password must be 8 or more characters` 
             })
-            .catch(next)
+        }
+
+        if(!REGEX_UPPER_LOWER_NUMBER_SPECIAL.test(password)) {
+            return res.status(400).json({
+                message: `Password must contain one uppercase character, one lowercase character, one sepcial character, and one number`
+            })
+        }
+
+        UsersService.hasUserWithEmail(req.app.get('db'), email)
+            .then(hasUser => {
+                if(hasUser){
+                    return res.status(400).json({
+                        message: `Email already used`
+                    })
+                }
+
+                return UsersService.hashPassword(password).then((hashPassword) => {
+                    const newUser = {
+                        email,
+                        password: hashPassword,
+                    }
+                    return UsersService.insertUser(
+                        req.app.get('db'),
+                        newUser
+                    )
+                        .then(user => {
+                            res
+                                .status(201)
+                                .json(user)
+                        })
+                        .catch(next)
+                })
+
+            })
     })
 
 usersRouter
