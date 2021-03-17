@@ -3,8 +3,7 @@ const xss = require('xss')
 const UsersService = require('./users-service')
 const usersRouter = express.Router()
 const jsonParser = express.json()
-const bcrypt = require('bcryptjs')
-const { hashPassword } = require('./users-service')
+const { requireAuth } = require('../middleware/jwt-auth');
 
 const serializeUser = (user) => {
     return {
@@ -15,14 +14,8 @@ const serializeUser = (user) => {
 
 usersRouter
     .route('/')
-    .get((req, res, next) => {
-        UsersService.getAllUsers(
-            req.app.get('db')
-        )
-            .then(users => {
-                res.json(users)
-            })
-            .catch(next)
+    .get(requireAuth, (req, res) => {
+        res.json(serializeUser(req.user))
     })
     .post(jsonParser, (req, res, next) => {
         const { email, password } = req.body
@@ -72,7 +65,7 @@ usersRouter
                         .then(user => {
                             res
                                 .status(201)
-                                .json(user)
+                                .json(serializeUser(user))
                         })
                         .catch(next)
                 })
