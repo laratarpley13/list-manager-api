@@ -8,7 +8,7 @@ const {requireAuth} = require('../middleware/jwt-auth');
 
 const listsRouter = express.Router()
 const jsonParser = express.json()
-
+/* 
 listsRouter
     .route('/:user_id')
     .get((req, res, next) => {
@@ -20,7 +20,7 @@ listsRouter
                 res.json(lists)
             })
             .catch(next)
-    })
+    }) */
 
 listsRouter
     .route('/')
