@@ -1,8 +1,8 @@
 const { getById } = require("../users/users-service")
 
 const ListsService = {
-    getAllLists(knex, userId) {
-        return knex.from('lists').select('*').where('userid', userId)
+    getAllLists(knex, userid) {
+        return knex.from('lists').select('*').where('userid', userid)
     },
     insertList(knex, newList) {
         return knex

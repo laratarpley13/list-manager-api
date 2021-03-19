@@ -4,6 +4,8 @@ const express = require('express')
 const ListsService = require('./lists-service')
 //const usersRouter = require('../users/users-router')
 
+const {requireAuth} = require('../middleware/jwt-auth');
+
 const listsRouter = express.Router()
 const jsonParser = express.json()
 
@@ -22,7 +24,17 @@ listsRouter
 
 listsRouter
     .route('/')
-    .post(jsonParser, (req, res, next) => {
+    .get(requireAuth, (req, res, next)=>{
+        ListsService.getAllLists(
+            req.app.get('db'),
+            req.user.id //look at this
+        )
+            .then(lists => {
+                res.json(lists)
+            })
+            .catch(next)
+    })
+    .post(requireAuth, jsonParser, (req, res, next) => {
         const { name, userid } = req.body
         const newList = { name, userid }
 
@@ -73,7 +85,7 @@ listsRouter
             userid: res.list.userid,
         })
     })
-    .delete((req, res, next) => {
+    .delete(requireAuth, (req, res, next) => {
         ListsService.deleteList(
             req.app.get('db'),
             req.params.user_id,
@@ -84,7 +96,7 @@ listsRouter
             })
             .catch(next)
     })
-    .patch(jsonParser, (req, res, next) => {
+    .patch(requireAuth, jsonParser, (req, res, next) => {
         const { name } = req.body
         const listToUpdate = { name }
 

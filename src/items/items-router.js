@@ -1,5 +1,6 @@
 //const path = require('path')
 const express = require('express')
+const { requireAuth } = require('../middleware/jwt-auth')
 //const xss = require('xss')
 const ItemsService = require('./items-service')
 //const usersRouter = require('../users/users-router')
@@ -23,7 +24,17 @@ itemsRouter
 
 itemsRouter
     .route('/')
-    .post(jsonParser, (req, res, next) => {
+    .get(requireAuth, (req, res, next) => {
+        ItemsService.getAllItems(
+            req.app.get('db'),
+            req.user.id //new section
+        )
+            .then(items => {
+                res.json(items)
+            })
+            .catch(next)
+    })
+    .post(requireAuth, jsonParser, (req, res, next) => {
         const { name, userid, listid } = req.body
         const newItem = { name, userid, listid }
 
@@ -67,17 +78,7 @@ itemsRouter
             })
             .catch(next)
     })
-    .get((req, res, next) => {
-        res.json({
-            id: res.item.id,
-            name: res.item.name,
-            listid: res.item.listid,
-            userid: res.item.userid,
-            active: res.item.active,
-            edititemactive: res.item.active,
-        })
-    })
-    .delete((req, res, next) => {
+    .delete(requireAuth, (req, res, next) => {
         ItemsService.deleteItem(
             req.app.get('db'),
             req.params.user_id,
