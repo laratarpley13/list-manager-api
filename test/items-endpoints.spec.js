@@ -16,6 +16,8 @@ describe('Items Endpoints', function() {
 
     before('clean the table', () => db('blogful_articles').truncate())
 
+    afterEach('cleanup', () =>('lists').truncate())
+
     context(`/:user_id`, () => {
         //get
     })

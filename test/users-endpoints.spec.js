@@ -16,6 +16,8 @@ describe('Users Endpoints', function() {
 
     before('clean the table', () => db('blogful_articles').truncate())
 
+    afterEach('cleanup', () =>('lists').truncate())
+
     context(`/`, () => {
         //get - require auth
         //post

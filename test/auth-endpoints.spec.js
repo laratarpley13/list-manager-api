@@ -16,6 +16,8 @@ describe('Auth Endpoints', function() {
 
     before('clean the table', () => db('blogful_articles').truncate())
 
+    afterEach('cleanup', () =>('lists').truncate())
+
     context(`/signin`, () => {
         //post
     })
