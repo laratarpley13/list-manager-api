@@ -4,7 +4,8 @@ const supertest = require('supertest')
 const app = require('../src/app')
 const { makeUsersArray } = require('./users.fixtures')
 const { makeListsArray } = require('./lists.fixtures')
-const { makeItemsArray } = require('./items.fixtures')
+
+//add auth routes
 
 describe('Lists Endpoints', function() {
     let db;
@@ -42,7 +43,7 @@ describe('Lists Endpoints', function() {
 
     //afterEach('cleanup', () =>('lists').truncate())
 
-    context.only(`Given there are lists in the database`, () => {
+    context(`Given there are lists in the database`, () => {
         const testLists = makeListsArray();
         const testUsers = makeUsersArray();
         
