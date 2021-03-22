@@ -79,6 +79,19 @@ describe('Items Endpoints', function() {
                 .set('Authorization', `Bearer ${authToken}`)
                 .expect(200, expectedItems)
         })
+        it('GET /api/items/:user_id responds with 200 and all of the items for the user', () => {
+            const expectedItems = [{
+                id: 1,
+                name: "item 1",
+                listid: 1,
+                userid: 1,
+                active: false,
+                edititemactive: false,
+            }];
+            return supertest(app)
+                .get('/api/items/1')
+                .expect(200, expectedItems)
+        })
         it('DELETE /api/items/:userid/:listid/:item_id responds with 204 if lists exists and is succesful', () => {
             const expectedItems = testItems.filter(item => item.id !== 3)
             return supertest(app)
@@ -131,6 +144,11 @@ describe('Items Endpoints', function() {
             return supertest(app)
                 .get('/api/items')
                 .set('Authorization', `Bearer ${authToken}`)
+                .expect(200, [])
+        })
+        it('GET /api/items/:userid responds with an empty array for the user', () => {
+            return supertest(app)
+                .get('/api/items/1')
                 .expect(200, [])
         })
     })
