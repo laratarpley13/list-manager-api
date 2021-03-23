@@ -40,7 +40,7 @@ describe('Users Endpoints', function() {
 
     //afterEach('cleanup', () =>('lists').truncate())
 
-    context.only('/api/users route', () => {
+    context('/api/users route', () => {
         const testUsers = makeUsersArray();
         
         beforeEach('insert users', () => {
