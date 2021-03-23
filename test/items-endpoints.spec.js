@@ -40,10 +40,6 @@ describe('Items Endpoints', function() {
 
     after('disconnect from db', () => db.destroy())
 
-    //before('clean the table', () => db('blogful_articles').truncate())
-
-    //afterEach('cleanup', () =>('lists').truncate())
-
     context(`Given there are lists in the database`, () => {
         const testItems = makeItemsArray();
         const testLists = makeListsArray();

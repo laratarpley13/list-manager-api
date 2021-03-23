@@ -36,10 +36,6 @@ describe('Auth Endpoints', function() {
 
     after('disconnect from db', () => db.destroy())
 
-    //before('clean the table', () => db('blogful_articles').truncate())
-
-    //afterEach('cleanup', () =>('lists').truncate())
-
     context('/signin user route', () => {
         const testUsers = makeUsersArray();
         
