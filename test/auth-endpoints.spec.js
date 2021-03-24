@@ -69,11 +69,5 @@ describe('Auth Endpoints', function() {
                 .send({email: "test@test.com", password: "P@ssword5678"})
                 .expect(400, {message: 'Incorrect email or password'})
         })
-        it('if both email and password are correct, send auth token', () => {
-            return supertest(app)
-                .post('/api/auth/signin')
-                .send({email: "test@test.com", password: "P@ssword1234"})
-                .expect({authToken: authToken})
-        })
     })
 })

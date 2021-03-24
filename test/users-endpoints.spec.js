@@ -67,7 +67,7 @@ describe('Users Endpoints', function() {
             return supertest(app)
                 .post('/api/users')
                 .send({email: "test2@test.com", password: "P@ssword"})
-                .expect(400, {message: `Password must contain one uppercase character, one lowercase character, one sepcial character, and one number`})
+                .expect(400, {message: `Password must contain one uppercase character, one lowercase character, one special character, and one number`})
         })
         it('responds with a 400 if email has already been used for an account', () => {
             return supertest(app)
