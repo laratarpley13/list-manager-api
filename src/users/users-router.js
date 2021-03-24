@@ -41,7 +41,7 @@ usersRouter
 
         if(!REGEX_UPPER_LOWER_NUMBER_SPECIAL.test(password)) {
             return res.status(400).json({
-                message: `Password must contain one uppercase character, one lowercase character, one sepcial character, and one number`
+                message: `Password must contain one uppercase character, one lowercase character, one special character, and one number`
             })
         }
 
