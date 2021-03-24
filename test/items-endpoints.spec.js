@@ -6,8 +6,6 @@ const { makeUsersArray } = require('./users.fixtures')
 const { makeListsArray } = require('./lists.fixtures')
 const { makeItemsArray } = require('./items.fixtures')
 
-//add final get route and auth routes
-
 describe('Items Endpoints', function() {
     let db;
     let authToken;

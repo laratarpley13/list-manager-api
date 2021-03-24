@@ -36,10 +36,6 @@ describe('Users Endpoints', function() {
 
     after('disconnect from db', () => db.destroy())
 
-    //before('clean the table', () => db('blogful_articles').truncate())
-
-    //afterEach('cleanup', () =>('lists').truncate())
-
     context('/api/users route', () => {
         const testUsers = makeUsersArray();
         

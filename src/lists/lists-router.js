@@ -1,33 +1,17 @@
-//const path = require('path')
 const express = require('express')
-//const xss = require('xss')
 const ListsService = require('./lists-service')
-//const usersRouter = require('../users/users-router')
 
 const {requireAuth} = require('../middleware/jwt-auth');
 
 const listsRouter = express.Router()
 const jsonParser = express.json()
-/* 
-listsRouter
-    .route('/:user_id')
-    .get((req, res, next) => {
-        ListsService.getAllLists(
-            req.app.get('db'),
-            req.params.user_id
-        )
-            .then(lists => {
-                res.json(lists)
-            })
-            .catch(next)
-    }) */
 
 listsRouter
     .route('/')
     .get(requireAuth, (req, res, next)=>{
         ListsService.getAllLists(
             req.app.get('db'),
-            req.user.id //look at this
+            req.user.id
         )
             .then(lists => {
                 res.json(lists)

@@ -5,8 +5,6 @@ const app = require('../src/app')
 const { makeUsersArray } = require('./users.fixtures')
 const { makeListsArray } = require('./lists.fixtures')
 
-//add auth routes
-
 describe('Lists Endpoints', function() {
     let db;
     let authToken;
@@ -38,10 +36,6 @@ describe('Lists Endpoints', function() {
     })
 
     after('disconnect from db', () => db.destroy())
-
-    //before('clean the table', () => db('blogful_articles').truncate())
-
-    //afterEach('cleanup', () =>('lists').truncate())
 
     context(`Given there are lists in the database`, () => {
         const testLists = makeListsArray();
@@ -111,8 +105,6 @@ describe('Lists Endpoints', function() {
                 .send({name: 'change List name test'})
                 .expect(404, {error: {message: `List doesn't exist`}})
         })
-        //get - require auth
-        //post - require auth
     })
 
     context(`Given there are no lists in the database`, () => {
@@ -130,8 +122,6 @@ describe('Lists Endpoints', function() {
                 .set('Authorization', `Bearer ${authToken}`)
                 .expect(200, [])
         })
-        //delete - require auth
-        //patch - require auth
     })
 
     context(`makes a POST request to api/lists`, () => {
